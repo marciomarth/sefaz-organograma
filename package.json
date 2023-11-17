@@ -1,7 +1,7 @@
 {
   "name": "vueOrgChart",
   "version": "1.0.0",
-  "description": "Organization chart",
+  "description": "SEFAZ|Organograma",
   "author": "Michael Hoogkamer",
   "private": true,
   "scripts": {

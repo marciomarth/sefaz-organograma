@@ -4,7 +4,7 @@
     v-if='editMode',
     v-on:click='$store.commit("setEditMode", false)'
   ) Click to leave editmode
-
+  search-box
   .menu
     file-menu(v-if='editMode', @editconfig='editConfig = true')
     options-menu(v-if='config.enableUserSettings')
@@ -28,13 +28,13 @@
       div(v-if='config.showUserManual')
         hr
         a(
-          href='/',
+          href='https://freeorgchart.netlify.app/#faq',
           target='_blank'
         )
-          .i-github
+          .i-github 
             .i-github-text User manual
             a(
-              href='/',
+              href='https://github.com/Hoogkamer/vue-org-chart',
               target='_blank'
             )
               img.gh(
@@ -42,7 +42,6 @@
                 title='Go to Github project page'
               )
   edit-config(v-if='editConfig', @close='editConfig = false')
-  search-box
 </template>
 
 <script>
@@ -122,13 +121,10 @@ function saveAs(uri, filename) {
 <style scoped>
 .header {
   width: 100%;
-  height: 155px;
+  height: 50px;
   color: white;
   text-align: center;
-  font-size: 30px;
-  background-image: url('../assets/img/sefaz-topo.png');
-  background-repeat: no-repeat;
-  background-size: cover;
+  font-size: 40px;
   font-weight: 500;
   position: fixed;
   left: 0px;
@@ -162,19 +158,15 @@ function saveAs(uri, filename) {
   border: 1px solid white;
 }
 .menu {
-  height: 55px;
-  margin-top: 148px;
-  background: #002e6f;
   position: absolute;
   top: 5px;
+  left: 60px;
   font-size: 16px;
-  color: white;
-  width: 100%;
+  width: 200px;
   text-align: left;
   padding: 10px;
 }
 .gh {
-  background: yellow;
   position: absolute;
   right: 10px;
   top: 5px;

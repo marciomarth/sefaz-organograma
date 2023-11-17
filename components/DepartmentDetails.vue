@@ -4,15 +4,19 @@
       span.label {{uiNames.sidebar.departmentName}}
       br
       input.name(v-if='editMode' :class="{error:!activeDepartment_name}" v-model="activeDepartment_name")
-      span(v-else).text  {{activeDepartment_description}}
+      span(v-else).text {{activeDepartment_name}}
 
     .property
       span.label {{uiNames.sidebar.departmentManager}}
       i.material-icons.edit(v-if='editMode' v-on:click='personPicker="manager"') edit
       br
       span.text(v-if='activeDepartment.manager.name') {{activeDepartment.manager.name}}
-      span.untext(v-else) ----
-
+      span.untext(v-else) No manager
+    .property
+      span.label {{uiNames.sidebar.departmentDescription}}
+      br 
+      textarea.description(v-if='editMode' v-model="activeDepartment_description")
+      span(v-else v-html="activeDepartment_description").text
 
     .property(v-for="field in activeDepartment.dataFields" v-if="field.value")
       span.label {{field.name}}
@@ -37,7 +41,7 @@
     .property
       span.label  {{uiNames.sidebar.departmentHierarchy}}
       ul
-        li.clickable(v-for='(parent, pnr) in parents' v-on:click="setActiveDepartment(parent)")
+        li.clickable(v-for='(parent, pnr) in parents' v-on:click="setActiveDepartment(parent)") 
           span(v-for="n in pnr") &nbsp
           i(v-if="pnr !==0").material-icons.sub subdirectory_arrow_right
           span {{parent.name}}
@@ -45,12 +49,12 @@
           span(v-for="n in parents.length") &nbsp
           i(v-if="parents.length").material-icons.sub subdirectory_arrow_right
           span.this-department {{activeDepartment.name}}
-        li.clickable(v-for='child in activeDepartment.children' v-on:click="setActiveDepartment(child)")
+        li.clickable(v-for='child in activeDepartment.children' v-on:click="setActiveDepartment(child)") 
           span(v-for="n in parents.length+5") &nbsp
           span {{child.name}}
     img.profile(v-if='activeDepartment.manager.photo' :src='config.photoUrl.prefix+activeDepartment.manager.photo+config.photoUrl.suffix' v-on:click='visitProfile(activeDepartment.manager)' title='Goto profile')
     .material-icons.profile.nophoto(v-else v-on:click='visitProfile(activeDepartment.manager)' title='Goto profile') face
-    person-picker(v-if='personPicker' type='manager' v-on:close='personPicker=null')
+    person-picker(v-if='personPicker' type='manager' v-on:close='personPicker=null') 
 </template>
 
 <script>
@@ -137,9 +141,9 @@ export default {
   max-height: 80px;
   min-height: 60px;
   position: absolute;
-  right: 10px;
-  top: 210px;
-  /*border: 1px solid grey; */
+  right: 16px;
+  top: 154px;
+  border: 1px solid grey;
   cursor: pointer;
 }
 .profile:hover {
@@ -171,8 +175,7 @@ textarea.description {
 }
 .label {
   font-weight: 600;
-  font-size: 18px;
-  line-height: 1.5em;
+  text-decoration: underline;
 }
 .untext {
   color: grey;

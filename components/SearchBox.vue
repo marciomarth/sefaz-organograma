@@ -1,6 +1,6 @@
 <template lang='pug'>
   #search_div
-    input.search_input(v-model='searchField' placeholder='Busque por uma unidade, equipe ou sistema')
+    input.search_input(v-model='searchField' placeholder='Pesquisar por um departamento ou pessoa...')
     #search_results(v-if="searchField.length")
       ul
         li(v-if="searchresults.length" v-for="result in searchresults" v-on:click="findDept(result)")
@@ -86,15 +86,10 @@ export default {
 </script>
 <style scoped>
 #search_div {
-  display: flex;
-  align-self: center;
-  align-content: center;
-  justify-content: center;
-  position: relative;
-  height: 40px;
-  width: 550px;
-  margin-left: 70%;
-  margin-top: 125px;
+  position: absolute;
+  top: -7px;
+  right: 64px;
+  width: 200px;
 }
 .search_input {
   width: 100%;
@@ -107,8 +102,8 @@ export default {
   outline: none;
 }
 #search_results {
-  width: 600px;
-  max-height: 700px;
+  width: 218px;
+  max-height: 500px;
   border: 1px solid lightgrey;
   position: absolute;
   z-index: 1;
@@ -117,7 +112,7 @@ export default {
   overflow-x: hidden;
   margin-left: 0px;
   color: grey;
-  font-size: 14px;
+  font-size: 12px;
   box-shadow: 3px 3px 3px grey;
   border-radius: 3px;
 }

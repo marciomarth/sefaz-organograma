@@ -1,36 +1,43 @@
 <template lang='pug'>
-    div()
+    div(v-on:mouseenter="mouseOverBox(true)" v-on:mouseleave="mouseOverBox(false)")
       template(v-if="departmentData")
-        i.material-icons.hidden_parents(v-if="hiddenParents" v-on:click="setHideParents(false)" title="Show parents") more_vert
-        .department
-          .col( :id="'ID_'+ departmentData.id" :class="[type, active, managerPhoto]"  @click="setActiveDepartment(departmentData, $event)" @touchend="setActiveDepartment(departmentData, $event)" v-on:contextmenu.prevent="showCtxMenu(departmentData,  $event)" v-on:mouseenter="mouseOverBox(true)" v-on:mouseleave="mouseOverBox(false)")
-            i.material-icons.view_button(v-if="displaySiblingIcon" v-on:click="showViewMenu(departmentData, $event)" title="Show/hide parents") visibility
+        .department( :id="'ID_'+ departmentData.id" :class="[type, active, managerPhoto]" :style="{ height: config.boxheight + 'px', width: config.boxwidth + 'px' }" @click="setActiveDepartment(departmentData, $event)" @touchend="setActiveDepartment(departmentData, $event)" v-on:contextmenu.prevent="showCtxMenu(departmentData,  $event)")
+          
+          .level_indicator(:style="{backgroundColor:config.levelColors[level-1]||'#FFFFFF', width: config.boxwidth -80 + 'px' }")
+          
+          
+          
+          template(v-if="!managerPhotoView")
+              
+            template(v-if="managerNameView")
+              .name1(v-html="departmentData.name")
+              .name_manager(v-if="managerNameView") {{departmentData.manager.name}}
+            template(v-else)
+              .name2(v-html="departmentData.name")
+              
+          // layout of department box WITH manager photo    
+          template(v-else)
             table
               tr
-                td.ppl_count0
-                  .ppl_count(v-if="showNrPeople")
-                    .ppl_count_nr(v-if='departmentData.employees.length' :title= "departmentData.employees.length + (departmentData.employees.length===1? ' person in this department': ' people in this department')") {{departmentData.employees.length}}
-                td(v-if='managerPhotoView')
+                td
                   img.profile(:src='config.photoUrl.prefix+departmentData.manager.photo+config.photoUrl.suffix' v-if="departmentData.manager.photo")
                   .material-icons.nophoto(v-else) face
                 td
-                  .level_indicator(:style="{backgroundColor:config.levelColors[level-1]||'#FFFFFF'}")
-                  div.textdiv(:style="{ height: config.boxHeight + 'px', width: config.boxWidth + 'px' }")
+                  div.textdiv
                     .name(v-html="departmentData.name")
-                    // .name_manager(v-if="managerNameView") {{departmentData.manager.name}}
-                td.drill0
-                  .drill
-                    template(v-if="departmentData.children.length")
-                      i.material-icons.arrow.down(v-if='!departmentData.showChildren' @click.prevent="doShowChildren(true)" @touchend.prevent="doShowChildren(true)") arrow_drop_down
-                      i.material-icons.arrow.up(v-if='departmentData.showChildren' @click.prevent="doShowChildren(false)" @touchend.prevent="doShowChildren(false)") arrow_drop_up
-                      template(v-if="showNrDepartments")
-                        div.hidden_dept.down(v-if='!departmentData.showChildren' @click.prevent="doShowChildren(true)" @touchend.prevent="doShowChildren(true)" :title="departmentData.children.length + ' subdepartment' + (departmentData.children.length===1?'':'s')") {{departmentData.children.length}}
-                        div.hidden_dept.up(v-if='departmentData.showChildren' @click.prevent="doShowChildren(false)" @touchend.prevent="doShowChildren(false)" :title="departmentData.children.length + ' subdepartment' + (departmentData.children.length===1?'':'s')") {{departmentData.children.length}}
-
-
-
-
-
+                    .name_manager(v-if="managerNameView") {{departmentData.manager.name}}
+              
+          template(v-if="departmentData.children.length")
+            i.material-icons.arrow.down(v-if='!departmentData.showChildren' @click.prevent="doShowChildren(true)" @touchend.prevent="doShowChildren(true)") arrow_drop_down
+            i.material-icons.arrow.up(v-if='departmentData.showChildren' @click.prevent="doShowChildren(false)" @touchend.prevent="doShowChildren(false)") arrow_drop_up
+            template(v-if="showNrDepartments")
+              div.hidden_dept.down(v-if='!departmentData.showChildren' @click.prevent="doShowChildren(true)" @touchend.prevent="doShowChildren(true)" title='Nr of subdepartments') {{departmentData.children.length}}
+              div.hidden_dept.up(v-if='departmentData.showChildren' @click.prevent="doShowChildren(false)" @touchend.prevent="doShowChildren(false)" title='Nr of subdepartments') {{departmentData.children.length}}
+          template(v-if="showNrPeople")
+            div.ppl_count(v-if='departmentData.employees.length' title='Nr of people in department') {{departmentData.employees.length}}
+          
+          i.material-icons.view_button(v-if="displaySiblingIcon" v-on:click="showViewMenu(departmentData, $event)" title="Show/hide parents") visibility
+          i.material-icons.hidden_parents(v-if="hiddenParents" v-on:click="setHideParents(false)" title="Show parents") more_vert   
         template(v-if="!departmentData")
             .department.invisible(v-if='!managerPhotoView' :class="[type]")
             .department.manager_photo.invisible(v-else :class="[type]")
@@ -128,7 +135,7 @@ export default {
       /*
       this.$store.commit('setActiveDepartment', department)
       this.$store.commit('showViewMenu', null)
-
+      
       this.$nextTick(e => {
         this.$store.commit('showViewMenu', event)
       })
@@ -163,17 +170,17 @@ export default {
   display: block;
   margin: auto;
   border-radius: 30px;
-  background: black;
 }
 .active_department {
-  background-color: #164193 !important;
-  color: white !important;
+  background-color: yellow !important;
+  color: black !important;
 }
 .arrow {
-  font-size: 40px;
+  font-size: 30px;
+  position: absolute;
   bottom: 0px;
-  right: 5px;
-  margin: -12px;
+  right: 0px;
+  margin: -8px;
 }
 .down {
   cursor: pointer;
@@ -183,7 +190,7 @@ export default {
 }
 .down:hover,
 .up:hover {
-  color: greenyellow;
+  color: red;
 }
 .view_button {
   font-size: 24px;
@@ -192,75 +199,49 @@ export default {
   right: 0px;
   margin: 0px;
   color: black;
-  z-index: 2;
-}
-.drill {
-  width: 10px;
-  height: 100%;
-  position: absolute;
-  bottom: 0px;
-}
-.drill0,
-.ppl_count0 {
-  max-height: 60px;
-  position: absolute;
-  width: 100%;
-}
-.ppl_custom {
-  margin: 0 auto;
-  height: 100%;
-}
-.ppl_count {
-  height: 100%;
-  color: yellow;
-  font-size: 12px;
-}
-.ppl_count_nr {
-  position: absolute;
-  bottom: 0px;
-  left: -10px;
-  color: grey;
-  font-size: 12px;
-  background-color: white;
-  padding: 0px 2px;
 }
 .department {
-  /* border: 0px solid rgb(180, 180, 180); */
-  margin: 10px 0px 5px 0px;
-  max-height: 65px;
+  width: 120px;
+  height: 60px;
+  border: 1px solid rgb(180, 180, 180);
+  margin: 30px 0px 5px 0px;
   text-align: center;
-  font-size: 14px;
-  font-weight: bold;
-  color: aliceblue;
+  font-size: 11px;
   vertical-align: middle;
   display: flex;
-  border-radius: 5px;
+  border-radius: 3px;
   align-items: center;
   cursor: pointer;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  background-color: #1c954d;
+  background-color: white;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 5px;
   padding: 2px 2px;
   position: relative;
-  width: 100%;
-  box-shadow: 3px 3px 3px darkgrey;
+  /*box-shadow: 3px 3px 3px lightgrey;*/
 }
 .manager_photo {
-  margin-top: 40px;
+  width: 180px;
+  height: 60px;
+  margin-top: 20px;
 }
 .invisible {
   visibility: hidden;
 }
 .level_indicator {
+  position: absolute;
+  height: 3px;
+  width: 100px;
+  right: 10px;
+  top: 3px;
   border-radius: 5px;
-  height: 5px;
-  margin-bottom: 5px;
 }
 .textdiv {
+  width: 114px;
+  height: 50px;
+  position: relative;
 }
 .column {
   margin-top: 1px;
@@ -278,7 +259,11 @@ export default {
 .name2 {
   overflow-wrap: break-word;
   min-width: 1%;
-  min-height: 1.9rem;
+  width: 114px;
+  display: inline-block;
+  position: absolute;
+  left: 0px;
+  top: 8px;
 }
 .name1 {
   top: 10px;
@@ -289,50 +274,47 @@ export default {
 .name_manager {
   overflow-wrap: break-word;
   min-width: 1%;
+  width: 100px;
   display: inline-block;
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
   color: grey;
 }
 .hidden_dept {
+  position: absolute;
   bottom: 10px;
   right: 1px;
-  width: 25px;
+  width: 14px;
+  background-color: white;
   color: grey;
   font-size: 12px;
   padding: 0px 2px;
   border-radius: 4px;
 }
-
+.ppl_count {
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  background-color: white;
+  color: grey;
+  font-size: 12px;
+  padding: 0px 2px;
+  border-radius: 4px;
+}
 .hidden_parents,
 .hidden_parents1 {
+  position: absolute;
+  top: -24px;
+  left: 78px;
   font-size: 24px;
   color: grey;
-  cursor: pointer;
 }
 .hidden_parents1 {
-  left: 150px;
+  left: 50px;
 }
 .nophoto {
   font-size: 52px;
   color: lightgrey;
-}
-.col {
-  /* border: 1px solid grey; */
-  border-collapse: collapse;
-  margin: auto;
-  padding: 5px 10px;
-  border-radius: 3px;
-  position: relative;
-  max-height: 63px;
-  max-width: 100%;
-}
-.material-icons.arrow {
-  position: absolute;
-  bottom: -60px;
-}
-
-.hidden_dept {
-  position: absolute;
-  bottom: -48px;
-  color: white;
 }
 </style>

@@ -1,20 +1,20 @@
 var UINAMES = {
   person: {
-    name: 'Name',
-    function: 'Function',
-    id: 'Employee ID',
-    departments: 'Departments'
+    name: 'Nome',
+    function: 'Função',
+    id: 'ID',
+    departments: 'Unidades'
   },
   sidebar: {
-    detailTabName: 'Details',
-    peopleTabName: 'People',
-    departmentName: 'Name',
-    departmentManager: 'Manager',
-    departmentDescription: 'Description',
-    departmentType: 'Department type',
-    departmentHierarchy: 'Hierarchy',
-    departmentTypeStaff: 'Staff department',
-    departmentTypeNormal: 'Normal department',
-    managerOfDepartment: 'Manager of department'
+    detailTabName: 'Detalhes',
+    peopleTabName: 'Unidade',
+    departmentName: 'Nome',
+    departmentManager: 'Gestor',
+    departmentDescription: 'Descrição',
+    departmentType: 'Unidade',
+    departmentHierarchy: 'Hieraquia',
+    departmentTypeStaff: 'Equipe',
+    departmentTypeNormal: 'Normal',
+    managerOfDepartment: 'Gestor da Unidade'
   }
 }

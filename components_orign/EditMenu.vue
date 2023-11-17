@@ -84,7 +84,7 @@ export default {
 #edit_menu {
   position: absolute;
   width: 150px;
-  background-color: yellow;
+  background-color: lightgrey;
   box-shadow: 5px 5px 5px black;
   top: 50px;
   left: 50px;

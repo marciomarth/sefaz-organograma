@@ -1,9 +1,9 @@
 <template lang='pug'>
-    #chart
-      .chart_container
-        show-dept(v-if="chart" :parent="chart" :level="1")
-        draw-lines(v-if="chart")
-        view-menu(v-if="showViewMenu")
+#chart
+  .chart_container
+    show-dept(v-if="chart" :parent="chart" :level="1")
+    draw-lines(v-if="chart")
+    view-menu(v-if="showViewMenu")
 </template>
 
 <script>
@@ -71,9 +71,9 @@ export default {
 <style scoped>
 #chart {
   position: relative;
-  margin-left: 350px;
-  padding: 20px;
-  margin-top: 200px;
+  margin-left: 300px;
+  padding: 10px;
+  margin-top: 50px;
   display: inline-block;
   text-align: center;
   box-sizing: border-box;
@@ -83,7 +83,7 @@ export default {
   /*box-shadow: 0px 0px 25px 3px lightgrey;*/
 
   background-color: white;
-  cursor: grab;
+  /*cursor: grab;*/
 }
 .chart-container {
   margin: auto;

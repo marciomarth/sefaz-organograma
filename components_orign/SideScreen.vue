@@ -49,9 +49,8 @@ export default {
 .title {
   text-align: center;
   min-height: 50px;
-  margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 600;
   width: calc(100% - 30px);
 }
@@ -95,9 +94,8 @@ input.name {
   position: fixed;
   left: 0px;
   top: 50px;
-  width: 320px;
+  width: 300px;
   height: 100vh;
-  margin-top: 160px;
   border-right: 0px solid lightgrey;
   background-color: #f9f5f5;
   padding: 5px;

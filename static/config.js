@@ -1,7 +1,7 @@
 var CONFIG = {
   enableUserSettings: false,
   showUserManual: false,
-  title: { color: '#05668d', text: 'BASE DE CONHECIMENTO' },
+  title: { color: '#05668d', text: 'SEFAZ - Organograma' },
   information:
     'Do you see something wrong? Please drop a <em>mail</em> to <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">someone@example.com</a>',
   photoUrl: { prefix: 'photos/', suffix: '.png' },
